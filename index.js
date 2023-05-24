@@ -5,8 +5,8 @@ const cors = require("cors");
 const { connection } = require("./db.js");
 const { productRoute } = require("./routes/product.routes");
 const { categoryRoute } = require("./routes/category.routes");
+const { authorize } = require("./middlewares/authorize.middleware");
 const app = express();
-
 
 app.use(express.json());
 app.use(
@@ -15,8 +15,9 @@ app.use(
   })
 );
 app.use("/login", userRoute);
-app.use("/product",productRoute)
-app.use("/category",categoryRoute)
+app.use(authorize)
+app.use("/product", productRoute);
+app.use("/category", categoryRoute);
 
 app.listen(process.env.PORT, async () => {
   try {
